@@ -15,9 +15,6 @@ spring:
     url: jdbc:oracle:thin:@127.0.0.1:1521:ORCL
     username: DEV
     password: orcl
-  cache:
-    caffeine:
-      spec: "maximumSize=500,expireAfterAccess=1800s"
   thymeleaf:
     prefix: classpath:/templates
     suffix: .html
