@@ -33,7 +33,7 @@
             .then(res => res.json().then(data => ({res, data})))
             .then(({res, data}) => {
                 if (res.ok) {
-                    if(data.result === 200) {
+                    if(data.code === 200) {
                         document.location.replace("/");
                     }
                 } else {
