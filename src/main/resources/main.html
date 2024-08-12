@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <h3>MAIN</h3>
+
+    <div>
+        <button sec:authorize="hasAnyAuthority('ADMIN','DEV')" type="button" onclick="document.location.href='/auth/form'">권한 등록</button>
+        <button sec:authorize="hasAnyAuthority('ADMIN')" type="button">admin</button>
+        <button sec:authorize="isAuthenticated()" type="button">user</button>
+        <button sec:authorize="!isAuthenticated()" type="button" onclick="document.location.href='/login'">로그인</button>
+        <button sec:authorize="isAuthenticated()" type="button" onclick="document.location.href='/logout'">로그아웃</button>
+    </div>
+</body>
+</html>

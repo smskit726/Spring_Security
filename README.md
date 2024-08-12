@@ -1,0 +1,46 @@
+### Spring Security (동적 권한 부여)
+
+---
+### Database
+
+```oracle
+    CREATE TABLE T_USER(
+        USER_ID VARCHAR2(60) PRIMARY KEY,
+        USER_PW VARCHAR2(255) NOT NULL
+    );
+    
+    
+    CREATE TABLE T_RESOURCE(
+        UUID VARCHAR2(36) PRIMARY KEY,
+        URL VARCHAR2(255) NOT NULL,
+        "METHOD" VARCHAR2(10) CHECK("METHOD" IN ('GET', 'POST', 'PUT', 'PATCH', 'DELETE') OR "METHOD" IS NULL)
+    );
+    
+    CREATE TABLE T_AUTH(
+        UUID VARCHAR2(36) PRIMARY KEY,
+        AUTH VARCHAR2(30) UNIQUE NOT NULL
+    );
+    
+    CREATE TABLE T_RESOURCE_AUTH(
+        RESOURCE_ID VARCHAR2(36) NOT NULL,
+        AUTH_ID VARCHAR2(36) NOT NULL
+    );
+    
+    CREATE TABLE T_USER_AUTH (
+        USER_ID VARCHAR2(36),
+        AUTH_ID VARCHAR2(36)
+    );
+    
+    INSERT ALL
+    INTO T_RESOURCE VALUES ('1d0e5c50-26d4-4e3a-bb38-5176ffe0eb51', '/', null)
+    INTO T_RESOURCE VALUES ('74b46c18-bbe7-454b-a33a-4da57f6ba2eb', '/login', null)
+    INTO T_RESOURCE VALUES ('066d8ee2-96ad-4d24-b7a5-411dbecd2e80', '/join/**', null)
+    INTO T_RESOURCE VALUES ('ce02969b-3314-4384-99a0-604089d3b85c', '/sample/**', 'GET')
+    SELECT * FROM DUAL;
+    
+    INSERT ALL
+    INTO T_AUTH VALUES ('5a31f328-3fba-486f-b2fb-d7f203d85bd8', 'ADMIN')
+    INTO T_AUTH VALUES ('94cf6f08-50fc-4ca5-873e-bf1cd2d6bc34', 'DEV')
+    INTO T_AUTH VALUES ('4821e4cd-f528-4655-a84d-6eb1fde48771', 'USER')
+    SELECT * FROM DUAL;
+```

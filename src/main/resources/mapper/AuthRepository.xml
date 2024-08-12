@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.shen.security.repository.AuthRepository">
+
+    <select id="findById" parameterType="String" resultType="String">
+        SELECT
+            AUTH
+        FROM T_AUTH
+        WHERE UUID = #{uuid}
+    </select>
+
+    <select id="findByAuth" parameterType="String" resultType="String">
+        SELECT
+            AUTH
+        FROM T_RESOURCE_AUTH A, T_AUTH B
+        WHERE A.AUTH_ID = B.UUID
+            AND AUTH_ID = #{uuid}
+    </select>
+
+    <select id="findByResource" parameterType="String" resultType="String">
+        SELECT
+            AUTH
+        FROM T_RESOURCE_AUTH A, T_AUTH B
+        WHERE A.AUTH_ID = B.UUID
+        AND RESOURCE_ID = #{uuid}
+    </select>
+
+    <insert id="post" parameterType="String">
+        INSERT INTO T_AUTH ( UUID, AUTH )
+        VALUES ( #{uuid}, #{auth} )
+    </insert>
+
+</mapper>

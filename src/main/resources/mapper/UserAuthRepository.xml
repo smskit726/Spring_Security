@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.co.shen.security.repository.UserAuthRepository">
+
+    <select id="findByUserId" parameterType="String" resultType="String">
+        SELECT
+            B.AUTH
+        FROM T_USER_AUTH A, T_AUTH B
+        WHERE A.AUTH_ID = B.UUID
+        AND A.USER_ID = #{userId}
+    </select>
+</mapper>

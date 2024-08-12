@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+                xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script>
+    const register = () => {
+        let authNm = document.getElementById("authNm").value;
+
+        if(!authNm) return;
+
+        fetch('/auth/proc', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                auth: authNm
+            })
+        })
+            .then( res => {
+                if(res.ok) {
+                    document.location.replace('/')
+                } else {
+                    alert('에러!');
+                }
+            })
+    }
+</script>
+<body>
+<h3>AUTH_FORM</h3>
+
+<form id="form">
+    <input id="authNm" type="text" placeholder="권한명"/>
+    <button type="button" onclick="register()">등록</button>
+    <button type="button" onclick="document.location.href='/'">취소</button>
+</form>
+</body>
+</html>

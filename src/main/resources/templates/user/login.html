@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    html, body { width: 100%; height: 100%; }
+    * { margin: 0; }
+    #field label { display: inline-block; width: 70px; text-align: center; }
+    #field { margin: 5px; padding: 10px; width: 50%; }
+    .btn_area { margin-top: 15px; text-align: right; }
+</style>
+<script>
+    const login = () => {
+        let userId = document.getElementById('userId').value;
+        let userPw = document.getElementById('userPw').value;
+
+        if(!userId || !userPw) {
+            alert('입력하세요');
+            return;
+        }
+
+        const params = new URLSearchParams();
+        params.append('userId', userId);
+        params.append('userPw', userPw);
+
+        fetch('/loginProc', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: params
+        })
+            .then(res => res.json().then(data => ({res, data})))
+            .then(({res, data}) => {
+                if (res.ok) {
+                    document.location.replace(data.uri);
+                } else {
+                    alert(data.message);
+                }
+            })
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('keypress', (e) => {
+            if (e.keyCode === 13) {
+                login();
+            }
+        })
+    });
+</script>
+<body>
+<h3>USER_LOGIN</h3>
+
+<div>
+    <fieldset id="field">
+        <form id="form">
+            <div>
+                <label for="userId">ID</label>
+                <input type="text" name="userId" id="userId" placeholder="ID"/>
+            </div>
+            <div>
+                <label for="userPw">PW</label>
+                <input type="password" name="userPw" id="userPw" placeholder="PASSWORD"/>
+            </div>
+        </form>
+        <div class="btn_area">
+            <button type="button" onclick="login();">로그인</button>
+            <button type="button" onclick="document.location.href='/join'">회원가입</button>
+            <button type="button" onclick="document.location.href='/'">취소</button>
+        </div>
+    </fieldset>
+</div>
+</body>
+</html>

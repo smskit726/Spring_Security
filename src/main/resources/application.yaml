@@ -1,0 +1,45 @@
+server:
+  servlet:
+    context-path: /
+  port: 8080
+
+logging:
+  level:
+    root: info
+
+spring:
+  application:
+    name: SpringSecurity
+  datasource:
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@127.0.0.1:1521:ORCL
+    username: DEV
+    password: orcl
+  cache:
+    caffeine:
+      spec: "maximumSize=500,expireAfterAccess=1800s"
+  thymeleaf:
+    prefix: classpath:/templates
+    suffix: .html
+    cache: false
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+      additional-paths:
+        - src/main/resources/static
+        - src/main/resources/templates
+
+  mvc:
+    static-path-pattern: /static/**
+
+mybatis:
+  mapper-locations: mapper/*.xml
+  type-aliases-package: kr.co.shen.security.dto
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+
+
